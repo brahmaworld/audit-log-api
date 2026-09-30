@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="AuditApp.DataAccess/AuditApp.DataAccess.csproj" />
+  <Project Path="AuditApp.Emp.Api/AuditApp.Emp.Api.csproj" />
+  <Project Path="AuditApp.Emp.Service/AuditApp.Emp.Service.csproj" />
+  <Project Path="AuditApp.Log.Service/AuditApp.Log.Service.csproj" />
+  <Project Path="AuditApp.Test/AuditApp.Test.csproj" Id="0d1052d6-072a-4bc5-82ae-116478761e6e" />
+</Solution>
