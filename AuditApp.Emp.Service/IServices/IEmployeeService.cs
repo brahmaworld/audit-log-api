@@ -4,7 +4,7 @@ namespace AuditApp.Emp.Service.IServices
 
     public interface IEmployeeService
     {
-        Task<IReadOnlyList<Employee>> GetAllAsync();
+        Task<IEnumerable<Employee>> GetAllAsync();
         Task<Employee?> GetByIdAsync(int id);
         Task<Employee> CreateAsync(Employee employee);
         Task<bool> UpdateAsync(Employee employee);

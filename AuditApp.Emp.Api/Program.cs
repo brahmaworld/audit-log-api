@@ -21,9 +21,9 @@ builder.Services.AddCors(options =>
 });
 
 // Register DbContext
-builder.Services.AddDbContext<EmpAuditDbContext>(options =>
+builder.Services.AddDbContext<EmpAuditPgsqlDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("EmpConnectionString"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString"));
 });
 
 // Register application services with lifetimes

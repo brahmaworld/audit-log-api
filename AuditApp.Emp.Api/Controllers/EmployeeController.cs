@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AuditApp.DataAccess.Entities;
 using AuditApp.Emp.Service.IServices;
+using AuditApp.DataAccess.Models;
 
 namespace AuditApp.Emp.Api.Controllers
 {
@@ -9,22 +10,22 @@ namespace AuditApp.Emp.Api.Controllers
     public class EmployeeController(IEmployeeService employeeService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<EmployeeResponse>>> GetAll()
+        public async Task<ActionResult> GetAll()
         {
             var employees = await employeeService.GetAllAsync();
-            return Ok(employees.Select(ToResponse).ToList());
+            return Ok(employees);
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<EmployeeResponse>> GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var employee = await employeeService.GetByIdAsync(id);
-            return employee is null ? NotFound() : Ok(ToResponse(employee));
+            return employee is null ? NotFound() : Ok(employee);
         }
 
         [HttpPost]
-        public async Task<ActionResult<EmployeeResponse>> Create(
-            [FromBody] CreateEmployeeRequest request)
+        public async Task<ActionResult> Create(
+            [FromBody] EmployeeRequest request)
         {
             var employee = new Employee
             {
@@ -36,13 +37,13 @@ namespace AuditApp.Emp.Api.Controllers
             };
 
             var createdEmployee = await employeeService.CreateAsync(employee);
-            return CreatedAtAction(nameof(GetById), new { id = createdEmployee.Id }, ToResponse(createdEmployee));
+            return CreatedAtAction(nameof(GetById), new { id = createdEmployee.Id }, createdEmployee);
         }
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(
             int id,
-            [FromBody] UpdateEmployeeRequest request)
+            [FromBody] EmployeeRequest request)
         {
             var employee = await employeeService.GetByIdAsync(id);
             if (employee is null)
@@ -70,18 +71,6 @@ namespace AuditApp.Emp.Api.Controllers
                 : NotFound();
         }
 
-        private static EmployeeResponse ToResponse(Employee employee) =>
-            new(employee.Id, employee.FirstName, employee.LastName, employee.Gender, employee.Email);
     }
 
-    public sealed record CreateEmployeeRequest(
-        string FirstName,
-        string LastName,
-        string Gender,
-        string Email,
-        string Password);
-
-    public sealed record UpdateEmployeeRequest(string FirstName, string LastName, string Gender);
-
-    public sealed record EmployeeResponse(int Id, string FirstName, string LastName, string Gender, string Email);
 }

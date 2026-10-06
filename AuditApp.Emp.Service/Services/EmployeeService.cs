@@ -5,9 +5,9 @@ namespace AuditApp.Emp.Service.Services
     using AuditApp.Emp.Service.IServices;
     using Microsoft.EntityFrameworkCore;
 
-    public class EmployeeService(EmpAuditDbContext dbContext) : IEmployeeService
+    public class EmployeeService(EmpAuditPgsqlDbContext dbContext) : IEmployeeService
     {
-        public async Task<IReadOnlyList<Employee>> GetAllAsync()
+        public async Task<IEnumerable<Employee>> GetAllAsync()
         {
             return await dbContext.Employees
                 .AsNoTracking()

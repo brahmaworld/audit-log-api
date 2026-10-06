@@ -11,8 +11,8 @@ namespace AuditApp.Emp.Service.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly EmpAuditDbContext _EmpAuditDbContext;
-        public AuthService(EmpAuditDbContext empAuditDbContext)
+        private readonly EmpAuditPgsqlDbContext _EmpAuditDbContext;
+        public AuthService(EmpAuditPgsqlDbContext empAuditDbContext)
         {
             _EmpAuditDbContext = empAuditDbContext;
         }
