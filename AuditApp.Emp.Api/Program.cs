@@ -2,6 +2,8 @@ using AuditApp.Emp.Service.IServices;
 using AuditApp.Emp.Service.Services;
 using AuditApp.DataAccess.DataContext;
 using Microsoft.EntityFrameworkCore;
+using AuditApp.Log.Service.Interfaces;
+using AuditApp.Log.Service.Implements;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,7 @@ builder.Services.AddDbContext<EmpAuditPgsqlDbContext>(options =>
 // Register application services with lifetimes
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuditLogService, AuditLogService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
